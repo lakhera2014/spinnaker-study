@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: prashant-solo-microservices
+        app: prashant-solo-microservice
         stack: frontend
         source: demo
-    name: prashant-solo-microservices
-    namespace: microservices
+    name: prashant-solo-microservice
+    namespace: microservice
 spec:
     replicas: 3
     selector:
         matchLabels:
-            run: prashant-solo-microservices
+            run: prashant-solo-microservice
     template:
         metadata:
             labels:
-                app: prashant-solo-microservices
-                run: prashant-solo-microservices
+                app: prashant-solo-microservice
+                run: prashant-solo-microservice
                 source: demo
         spec:
             containers:
-                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/prashant-solo-microservices
-                    name: prashant-solo-microservices
+                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/prashant-solo-microservice
+                    name: prashant-solo-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,13 +31,13 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: prashant-solo-microservices-service
-    name: prashant-solo-microservices-service
-    namespace: microservices
+        app: prashant-solo-microservice-service
+    name: prashant-solo-microservice-service
+    namespace: microservice
 spec:
     selector:
         source: demo
-        app: prashant-solo-microservices
+        app: prashant-solo-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -52,14 +52,14 @@ metadata:
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
     name: mild-temper-ingress
-    namespace: microservices
+    namespace: microservice
 spec:
     rules:
         -   http:
                 paths:
                     -   path: /mild-temper(/|$)(.*)
                         backend:
-                            serviceName: prashant-solo-microservices-service
+                            serviceName: prashant-solo-microservice-service
                             servicePort: 30201
 
 
